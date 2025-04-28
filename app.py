@@ -2,7 +2,7 @@ import os
 import streamlit as st
 import together
 
-# Pull the Together API key from Streamlit secrets
+# Load Together API Key
 together.api_key = os.getenv("TOGETHER_API_KEY")
 
 st.set_page_config(page_title="Together AI Code Generator", page_icon="🛠️")
@@ -19,13 +19,13 @@ generate = st.button("Generate code")
 if generate and prompt.strip():
     with st.spinner("Thinking..."):
         resp = together.Complete.create(
-            model="togethercomputer/GPT-NeoXT-Chat-Base-20B",  # ✅ Model that accepts simple prompts
+            model="togethercomputer/CodeGen-2B-mono",  # <--- simple model
             prompt=prompt,
-            max_tokens=300,
-            temperature=0.7,
+            max_tokens=256,
+            temperature=0.5,
             top_p=0.7,
         )
         code = resp['output']['choices'][0]['text'].strip()
-
+        
     st.subheader("Generated code")
     st.code(code, language="python")
