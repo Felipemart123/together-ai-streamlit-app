@@ -17,14 +17,15 @@ generate = st.button("Generate code")
 
 if generate and prompt.strip():
     with st.spinner("Thinking..."):
-        # Fixed: You must specify the model parameter
-        resp = together.Complete.create(
-            model="togethercomputer/CodeLlama-7b-Instruct",  # <--- NEW, CORRECT MODEL NAME
+        # Use the new Together API call correctly
+        resp = together.completions.create(
+            model="togethercomputer/CodeLlama-7b-Instruct",
             prompt=prompt,
             max_tokens=300,
             temperature=0.7,
             top_p=0.7,
         )
-        code = resp["output"]["choices"][0]["text"].strip()  # <--- Fixed the way the text is pulled
+        code = resp["choices"][0]["text"].strip()
     st.subheader("Generated code")
     st.code(code, language="python")
+
