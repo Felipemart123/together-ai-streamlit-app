@@ -18,15 +18,17 @@ generate = st.button("Generate code")
 
 if generate and prompt.strip():
     with st.spinner("Thinking..."):
-        resp = together.Complete.create(
-            model="togethercomputer/CodeLlama-7b-Instruct",  # ✅ Correct model
-            prompt=prompt,
-            max_tokens=300,
+        resp = together.chat.completions.create(
+            model="togethercomputer/CodeLlama-7b-Instruct",
+            messages=[
+                {"role": "system", "content": "You are a helpful AI that writes Python code."},
+                {"role": "user", "content": prompt},
+            ],
             temperature=0.7,
             top_p=0.7,
+            max_tokens=300,
         )
-        # Correct parsing of the response
-        code = resp['output']['choices'][0]['text'].strip()
+        code = resp['choices'][0]['message']['content'].strip()
         
     st.subheader("Generated code")
     st.code(code, language="python")
