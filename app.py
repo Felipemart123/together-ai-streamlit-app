@@ -19,7 +19,7 @@ generate = st.button("Generate code")
 if generate and prompt.strip():
     with st.spinner("Thinking..."):
         resp = together.Complete.create(
-            model="togethercomputer/CodeLlama-7b-Instruct",
+            model="togethercomputer/llama-2-7b-chat",  # ✅ Changed the model to one that accepts simple prompts
             prompt=prompt,
             max_tokens=300,
             temperature=0.7,
