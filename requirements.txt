@@ -1,3 +1,2 @@
 streamlit
-together>=0.2.0
-requests
+together
