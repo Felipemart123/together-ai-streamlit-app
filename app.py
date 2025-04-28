@@ -18,15 +18,9 @@ generate = st.button("Generate code")
 
 if generate and prompt.strip():
     with st.spinner("Thinking..."):
-        # Build a "fake chat" prompt
-        full_prompt = f"""You are a helpful assistant that writes Python code.
-
-User: {prompt}
-Assistant:"""
-
         resp = together.Complete.create(
-            model="togethercomputer/llama-2-7b-chat",
-            prompt=full_prompt,
+            model="togethercomputer/GPT-NeoXT-Chat-Base-20B",  # ✅ Model that accepts simple prompts
+            prompt=prompt,
             max_tokens=300,
             temperature=0.7,
             top_p=0.7,
